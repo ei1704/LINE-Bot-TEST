@@ -39,11 +39,17 @@ function handleEvent(event) {
     return Promise.resolve(null);
   }
 
+  var textStr;
   // 返信用メッセージを組み立てる : ユーザからのメッセージにカギカッコを付けて返信してみる
+  if(event.message.text == 'hello'){
+    textStr = 'hello';
+  }else{
+    textStr = 'そろそろ休憩しませんか？';
+  }
   const echoMessage = {
     type: 'text',
     // text: `「${event.message.text}」`
-    text: `そろそろ休憩しませんか？`
+    text: textStr
   };
 
   // Reply API を利用してリプライする
