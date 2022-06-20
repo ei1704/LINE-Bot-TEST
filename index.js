@@ -42,7 +42,8 @@ function handleEvent(event) {
   // 返信用メッセージを組み立てる : ユーザからのメッセージにカギカッコを付けて返信してみる
   const echoMessage = {
     type: 'text',
-    text: `「${event.message.text}」`
+    // text: `「${event.message.text}」`
+    text: `そろそろ休憩しませんか？`
   };
 
   // Reply API を利用してリプライする
