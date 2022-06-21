@@ -27,6 +27,8 @@ app.post('/callback', line.middleware(config), (req, res) => {
     }))
 });
 
+app.get('/',(req,res) => res.send('hello world!'))
+
 /**
  * イベント1件を処理する
  * 
