@@ -27,8 +27,8 @@ app.post('/callback', line.middleware(config), (req, res) => {
     }))
 });
 
-app.use(express.static(path.join(__dirname, 'public')));
-app.get('/',(req,res) => res.send('hello world!'))
+//app.use(express.static(path.join(__dirname, 'public')));
+//app.get('/',(req,res) => res.send('hello world!'))
 
 /**
  * イベント1件を処理する
