@@ -31,6 +31,9 @@ app.post('/callback', line.middleware(config), (req, res) => {
 app.get('/',(req,res) => res.sendFile(__dirname + '/index.html'));
 app.get('/button', (req, res) => {
   res.send('<Button onclick="clicked()">こんにちは！</Button>');
+  function clicked(){
+    alert("hello");
+  }
 });
 
 /**
@@ -70,6 +73,3 @@ app.listen(port, () => {
   console.log(`Listening on ${port}`);
 });
 
-function clicked(){
-  alert("hello");
-}
