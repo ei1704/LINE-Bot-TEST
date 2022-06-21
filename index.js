@@ -29,6 +29,9 @@ app.post('/callback', line.middleware(config), (req, res) => {
 
 //app.use(express.static(path.join(__dirname, 'public')));
 app.get('/',(req,res) => res.sendFile(__dirname + '/index.html'));
+app.get('/button', (req, res) => {
+  res.send('<Button onclick="clicked()">こんにちは！</Button>');
+});
 
 /**
  * イベント1件を処理する
