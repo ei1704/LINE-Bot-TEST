@@ -28,7 +28,7 @@ app.post('/callback', line.middleware(config), (req, res) => {
 });
 
 //app.use(express.static(path.join(__dirname, 'public')));
-//app.get('/',(req,res) => res.send('hello world!'))
+app.get('/',(req,res) => res.sendFile('/index.html'));
 
 /**
  * イベント1件を処理する
