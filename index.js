@@ -1,5 +1,6 @@
 const line = require('@line/bot-sdk');
 const express = require('express');
+var messageDict;
 
 // 環境変数からチャネルアクセストークンとチャネルシークレットを取得する
 const config = {
@@ -29,6 +30,7 @@ app.post('/callback', line.middleware(config), (req, res) => {
 
 //app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', (req, res) => res.sendFile(__dirname + '/index.html'));
+//アクセスされたらメッセージ送信
 app.get('/push', (req, res) => {
   broadCastMessage();
 });
@@ -69,6 +71,8 @@ function handleEvent(event) {
   if (event.type !== 'message' || event.message.type !== 'text') {
     return Promise.resolve(null);
   }
+
+  messageDict[client.id] = event.message.text
 
   var textStr;
   // 返信用メッセージを組み立てる : ユーザからのメッセージにカギカッコを付けて返信してみる
