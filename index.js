@@ -28,13 +28,35 @@ app.post('/callback', line.middleware(config), (req, res) => {
 });
 
 //app.use(express.static(path.join(__dirname, 'public')));
-app.get('/',(req,res) => res.sendFile(__dirname + '/index.html'));
+app.get('/', (req, res) => res.sendFile(__dirname + '/index.html'));
+app.get('/push', (req, res) => {
+  broadCastMessage();
+});
+
+
 app.get('/button', (req, res) => {
   res.send('<Button onclick="clicked()">こんにちは！</Button>');
-  function clicked(){
+  function clicked() {
     alert("hello");
   }
 });
+
+const broadCastMessage = async () => {
+  const messages = [{
+    type: 'text',
+    text: 'botより送信'
+  }];
+
+  try {
+    const res = await client.broadcast(messages);
+    console.log(res);
+  } catch (error) {
+    console.log(`エラー: ${error.statusMessage}`);
+    console.log(error.originalError.response.data);
+  }
+};
+
+
 
 /**
  * イベント1件を処理する
@@ -50,9 +72,9 @@ function handleEvent(event) {
 
   var textStr;
   // 返信用メッセージを組み立てる : ユーザからのメッセージにカギカッコを付けて返信してみる
-  if(event.message.text == 'hello'){
+  if (event.message.text == 'hello') {
     textStr = 'hello';
-  }else{
+  } else {
     textStr = 'そろそろ休憩しませんか？';
   }
   const echoMessage = {
