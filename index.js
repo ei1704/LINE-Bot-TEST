@@ -84,7 +84,7 @@ function handleEvent(event) {
   const echoMessage = {
     type: 'text',
     // text: `「${event.message.text}」`
-    text: textStr
+    text: textStr + messageDict[client.id]
   };
 
   // Reply API を利用してリプライする
