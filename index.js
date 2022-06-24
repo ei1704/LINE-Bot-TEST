@@ -21,6 +21,7 @@ app.post('/callback', line.middleware(config), (req, res) => {
   Promise.all(events.map((event) => {
     console.log("hello");
     console.log(client);
+    res.send(client);
     // イベント1件を処理する・エラー時も例外を伝播しないようにしておく
     return handleEvent(event).catch(() => { return null; });
   })
