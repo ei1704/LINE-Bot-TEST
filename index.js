@@ -74,7 +74,7 @@ function handleEvent(event) {
     return Promise.resolve(null);
   }
 
-  messageDict[client.id] = event.message.text
+  //messageDict[client.id] = event.message.text
 
   var textStr;
   // 返信用メッセージを組み立てる : ユーザからのメッセージにカギカッコを付けて返信してみる
@@ -85,8 +85,8 @@ function handleEvent(event) {
   }
   const echoMessage = {
     type: 'text',
-    // text: `「${event.message.text}」`
-    text: textStr + messageDict[client.id]
+    text: `「${event.message.text}」`
+    //text: textStr + messageDict[client.id]
   };
 
   // Reply API を利用してリプライする
