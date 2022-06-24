@@ -15,13 +15,13 @@ const app = express();
 
 // LINE Bot SDK が提供するミドルウェアを挟み込み、リクエストヘッダの署名検証や JSON パースなどを任せてしまう
 app.post('/callback', line.middleware(config), (req, res) => {
+  console.log("hello");
+  console.log(client);
+  res.send(client);
   // 1回のリクエストに複数のメッセージが含まれていたりすることもあるので
   // イベントの配列を1件ずつ取得して処理してやる
   const events = req.body.events;
   Promise.all(events.map((event) => {
-    console.log("hello");
-    console.log(client);
-    res.send(client);
     // イベント1件を処理する・エラー時も例外を伝播しないようにしておく
     return handleEvent(event).catch(() => { return null; });
   })
