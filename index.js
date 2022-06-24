@@ -40,7 +40,7 @@ app.get('/push', (req, res) => {
 
 
 app.get('/button', (req, res) => {
-  res.send('<Button onclick="clicked()">こんにちは！</Button>');
+  res.send('<Button onclick="clicked()">こんにちは！</Button>'+client);
   function clicked() {
     alert("hello");
   }
