@@ -19,6 +19,8 @@ app.post('/callback', line.middleware(config), (req, res) => {
   // イベントの配列を1件ずつ取得して処理してやる
   const events = req.body.events;
   Promise.all(events.map((event) => {
+    console.log("hello");
+    console.log(client);
     // イベント1件を処理する・エラー時も例外を伝播しないようにしておく
     return handleEvent(event).catch(() => { return null; });
   })
