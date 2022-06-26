@@ -22,7 +22,7 @@ const firebaseConfig = {
 
 // firebase appの初期化
 firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
+//const auth = firebase.auth();
 
 // 環境変数からチャネルアクセストークンとチャネルシークレットを取得する
 const config = {
@@ -111,7 +111,7 @@ async function handleEvent(event) {
       userDatas[event.source.userId].messageDict = "password";
     } else if (userDatas[event.source.userId].messageDict == 'password') {
       userDatas[event.source.userId].password = event.message.text;
-      await auth.signInWithEmailAndPassword(userDatas[event.source.userId].email, userDatas[event.source.userId].password)
+      await firebaseAuth.signInWithEmailAndPassword(userDatas[event.source.userId].email, userDatas[event.source.userId].password)
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
