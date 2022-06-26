@@ -1,4 +1,5 @@
 const line = require('@line/bot-sdk');
+const { text } = require('express');
 const express = require('express');
 var messageDict;
 
@@ -76,18 +77,26 @@ function handleEvent(event) {
     return Promise.resolve(null);
   }
 
-  //messageDict[client.id] = event.message.text
+
 
   var textStr;
-  // 返信用メッセージを組み立てる : ユーザからのメッセージにカギカッコを付けて返信してみる
+  // 返信用メッセージを組み立てる
   if (event.message.text == 'hello') {
     textStr = 'hello';
+  } else if (event.message.text == 'history') {
+    //ユーザの１つ前のメッセージを返すhistoryコマンド
+    if (messageDict[event.source.userId]) {
+      textStr = messageDict[event.source.userId];
+    } else {
+      textStr = "履歴なし"
+    }
   } else {
     textStr = 'そろそろ休憩しませんか？';
+    messageDict[event.source.userId] = event.message.text;
   }
   const echoMessage = {
     type: 'text',
-    text: event.source.userId
+    text: textStr
     //text: `「${event.message.text}」`
     //text: textStr + messageDict[client.id]
   };
