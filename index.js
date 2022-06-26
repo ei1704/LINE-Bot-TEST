@@ -113,9 +113,10 @@ async function handleEvent(event) {
       userDatas[event.source.userId].password = event.message.text;
       console.log("login now");
       var temp = userDatas[event.source.userId].email;
+      console.log(temp);
       //const auth = getAuth();
       //await firebaseAuth.signInWithEmailAndPassword(temp, event.message.text)
-      await firebaseAuth.signInWithEmailAndPassword(userDatas[event.source.userId].email, event.message.text)
+      await firebaseAuth.signInWithEmailAndPassword(temp, event.message.text)
         .then((userCredential) => {
           console.log("login OK");
           // Signed in
