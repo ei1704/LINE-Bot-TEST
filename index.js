@@ -108,8 +108,7 @@ function handleEvent(event) {
       userDatas[event.source.userId].messageDict = "password";
     } else if (userDatas[event.source.userId].messageDict == 'password') {
       userDatas[event.source.userId].password = event.message.text;
-      //result = showFirebaseIdToken(userDatas[event.source.userId].email, userDatas[event.source.userId].password);
-      result = "hoge";
+      result = showFirebaseIdToken(userDatas[event.source.userId].email, userDatas[event.source.userId].password);
       textStr = result;
     } else if (event.message.text == 'history') {
       //ユーザの１つ前のメッセージを返すhistoryコマンド
