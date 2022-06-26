@@ -8,7 +8,7 @@ var userDatas = {
 //import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 const firebase = require('firebase/app');
 const firebaseAuth = require('firebase/auth');
-const auth = getAuth();
+
 
 //firebaseの認証情報
 const firebaseConfig = {
@@ -23,7 +23,7 @@ const firebaseConfig = {
 
 // firebase appの初期化
 firebase.initializeApp(firebaseConfig);
-//const auth = firebase.auth();
+const auth = firebase.auth();
 
 // 環境変数からチャネルアクセストークンとチャネルシークレットを取得する
 const config = {
