@@ -140,6 +140,7 @@ function handleEvent(event) {
 function showFirebaseIdToken(email, password) {
   // firebase appの初期化
   const app = firebase.initializeApp(firebaseConfig);
+  var res = "None";
 
   // メール認証
   firebase.auth().signInWithEmailAndPassword(email, password)
@@ -148,18 +149,18 @@ function showFirebaseIdToken(email, password) {
       firebaseAuthUser.getIdToken(true)
         .then((idToken) => {
           console.log(idToken);
-          return idToken;
+          res = idToken;
         })
         .catch((error) => {
           console.log(error);
-          return error;
+          res = error;
         });
     })
     .catch(function (error) {
       console.log(error);
-      return error;
+      res = error;
     });
-
+  return res;
 }
 
 
