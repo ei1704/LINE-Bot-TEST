@@ -97,7 +97,11 @@ function handleEvent(event) {
 
   var textStr;
   // 返信用メッセージを組み立てる
-  if (userDatas[event.source.userId]) {
+  if (event.message.text == '認証' || event.message.text == 'login') {
+    //認証コマンド
+    textStr = 'メールアドレスを入力してください';
+    userDatas[event.source.userId] = { "email": "", "password": "", "messageDict": 'login' };
+  } else if (userDatas[event.source.userId]) {
     if (userDatas[event.source.userId].messageDict == 'login') {
       userDatas[event.source.userId].email = event.message.text;
       textStr = "次にパスワードを入力してください";
@@ -115,10 +119,6 @@ function handleEvent(event) {
         textStr = "履歴なし"
       }
     }
-  } else if (event.message.text == '認証' || event.message.text == 'login') {
-    //認証コマンド
-    textStr = 'メールアドレスを入力してください';
-    userDatas[event.source.userId].messageDict = { "email": "", "password": "", "messageDict": 'login' };
   } else {
     textStr = '「認証」もしくは「login」と入力し連携をして下さい。'
     //userDatas[event.source.userId] = 
