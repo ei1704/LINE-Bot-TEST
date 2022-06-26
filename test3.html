@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-app.js"></script>
+
+  <!-- FirebaseAuthenticationの参照を追加する -->
+  <script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-auth.js"></script>
+</head>
+
+<body>
+  <Button onclick="clicked()">こんにちは！</Button>
+  <button id="btnLogout">Log out</button>
+  <script>
+    var userDatas = {
+      d: { "email": "example@example.com", "password": "foo", "messageDict": "" },
+      foo: { "email": "ryopey1231@gmail.com", "password": "ryouhei12", "messageDict": "" }
+    };
+
+    const btnLogout = document.getElementById('btnLogout');     //Log outボタン
+    //import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+
+
+    //firebaseの認証情報
+    const firebaseConfig = {
+      apiKey: "AIzaSyAFHhTw4lUNSphTToflfGR4xlCrHZSBglY",
+      authDomain: "test-6921c.firebaseapp.com",
+      projectId: "test-6921c",
+      storageBucket: "test-6921c.appspot.com",
+      messagingSenderId: "328972503263",
+      appId: "1:328972503263:web:870f5c8c6618d8a05fc16a",
+      measurementId: "G-HSTBXVGJ9V"
+    };
+    // firebase appの初期化
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    async function clicked() {
+      await auth.signInWithEmailAndPassword(userDatas["foo"].email, userDatas["foo"].password)
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          res = user.uid;
+          //console.log(res);
+          // ...
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          res = errorMessage;
+          //console.log(res);
+        });;
+      textStr = res;
+      console.log(textStr);
+    }
+
+    btnLogout.addEventListener('click', e => firebase.auth().signOut());
+
+    auth.onAuthStateChanged(firebaseUser => {
+      if (firebaseUser) {
+        //認証OKの場合は，「認証OK」とメールアドレスをコンソールに表示する。
+        console.log('認証OK：' + firebaseUser.email);
+        btnLogout.style.display = "inline";
+      } else {
+        //認証NGの場合は，「認証NG」とコンソールに表示する。
+        console.log('認証NG');
+        btnLogout.style.display = "none";
+      };
+    });
+  </script>
+</body>
+
+</html>

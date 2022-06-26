@@ -1,6 +1,7 @@
 const line = require('@line/bot-sdk');
 const { text } = require('express');
 const express = require('express');
+const provider = new firebase.auth.GoogleAuthProvider()
 var userDatas = {
   foo: { "email": "example@example.com", "password": "foo", "messageDict": "" }
 };
@@ -20,6 +21,9 @@ const firebaseConfig = {
   measurementId: "G-HSTBXVGJ9V"
 };
 
+// firebase appの初期化
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
 
 // 環境変数からチャネルアクセストークンとチャネルシークレットを取得する
 const config = {
@@ -54,7 +58,7 @@ app.post('/callback', line.middleware(config), (req, res) => {
 app.get('/', (req, res) => res.sendFile(__dirname + '/index.html'));
 //アクセスされたらメッセージ送信
 app.get('/push', (req, res) => {
-  broadCastMessage();
+  broadCastMessage('botより送信');
 });
 
 
@@ -66,10 +70,10 @@ app.get('/button', (req, res) => {
   }
 });
 
-const broadCastMessage = async () => {
+const broadCastMessage = async (messageText) => {
   const messages = [{
     type: 'text',
-    text: 'botより送信'
+    text: messageText
   }];
 
   try {
@@ -108,8 +112,21 @@ function handleEvent(event) {
       userDatas[event.source.userId].messageDict = "password";
     } else if (userDatas[event.source.userId].messageDict == 'password') {
       userDatas[event.source.userId].password = event.message.text;
-      result = showFirebaseIdToken(userDatas[event.source.userId].email, userDatas[event.source.userId].password);
-      textStr = result;
+      await auth.signInWithEmailAndPassword(userDatas[event.source.userId].email, userDatas[event.source.userId].password)
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          res = user.uid;
+          //console.log(res);
+          // ...
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          res = errorMessage;
+          //console.log(res);
+        });;
+      textStr = res;
     } else if (event.message.text == 'history') {
       //ユーザの１つ前のメッセージを返すhistoryコマンド
       if (userDatas[event.source.userId].messageDict != "") {
@@ -135,34 +152,19 @@ function handleEvent(event) {
   // return client.pushMessage(event.source.userId, echoMessage);
 }
 
-
-// firebaseにアクセスしトークンを取得、表示する
-function showFirebaseIdToken(email, password) {
-  // firebase appの初期化
-  const app = firebase.initializeApp(firebaseConfig);
-  var res = "None";
-
-  // メール認証
-  firebase.auth().signInWithEmailAndPassword(email, password)
-    .then((result) => {
-      const firebaseAuthUser = result.user;
-      firebaseAuthUser.getIdToken(true)
-        .then((idToken) => {
-          console.log(idToken);
-          res = idToken;
-        })
-        .catch((error) => {
-          console.log(error);
-          res = error;
-        });
-    })
-    .catch(function (error) {
-      console.log(error);
-      res = error;
-    });
-  return res;
-}
-
+/*
+auth.onAuthStateChanged(firebaseUser => {
+  if (firebaseUser) {
+    //認証OKの場合は，「認証OK」とメールアドレスをコンソールに表示する。
+    console.log('認証OK：' + firebaseUser.email);
+    //btnLogout.style.display = "inline";
+  } else {
+    //認証NGの場合は，「認証NG」とコンソールに表示する。
+    console.log('認証NG');
+    //btnLogout.style.display = "none";
+  };
+});
+*/
 
 // サーバを起動する
 const port = process.env.PORT || 8080;
