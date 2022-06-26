@@ -1,7 +1,20 @@
 const line = require('@line/bot-sdk');
 const { text } = require('express');
 const express = require('express');
-var messageDict = [];
+var userDatas = [];
+const firebase = require('firebase/app');
+const firebaseAuth = require('firebase/auth');
+
+//firebaseの認証情報
+const firebaseConfig = {
+  apiKey: "AIzaSyAFHhTw4lUNSphTToflfGR4xlCrHZSBglY",
+  authDomain: "test-6921c.firebaseapp.com",
+  projectId: "test-6921c",
+  storageBucket: "test-6921c.appspot.com",
+  messagingSenderId: "328972503263",
+  appId: "1:328972503263:web:870f5c8c6618d8a05fc16a",
+  measurementId: "G-HSTBXVGJ9V"
+};
 
 // 環境変数からチャネルアクセストークンとチャネルシークレットを取得する
 const config = {
@@ -81,18 +94,22 @@ function handleEvent(event) {
 
   var textStr;
   // 返信用メッセージを組み立てる
-  if (event.message.text == 'hello') {
-    textStr = 'hello';
+  if (userDatas[event.source.userId].messageDict == 'login') {
+
   } else if (event.message.text == 'history') {
     //ユーザの１つ前のメッセージを返すhistoryコマンド
-    if (messageDict[event.source.userId]) {
-      textStr = messageDict[event.source.userId];
+    if (userDatas[event.source.userId].messageDict) {
+      textStr = userDatas[event.source.userId].messageDict;
     } else {
       textStr = "履歴なし"
     }
+  } else if (event.message.text == '認証' || event.message.text == 'login') {
+    //認証コマンド
+    textStr = 'メールアドレスを入力してください';
+    userDatas[event.source.userId].messageDict = 'login';
   } else {
     textStr = 'そろそろ休憩しませんか？';
-    messageDict[event.source.userId] = event.message.text;
+    userDatas[event.source.userId].messageDict = event.message.text;
   }
   const echoMessage = {
     type: 'text',
@@ -105,6 +122,29 @@ function handleEvent(event) {
   return client.replyMessage(event.replyToken, echoMessage);
   // Push API を利用する場合は以下のようにする
   // return client.pushMessage(event.source.userId, echoMessage);
+}
+
+// firebaseにアクセスしトークンを取得、表示する
+function showFirebaseIdToken(email, password) {
+  // firebase appの初期化
+  const app = firebase.initializeApp(firebaseConfig);
+
+  // メール認証
+  firebase.auth().signInWithEmailAndPassword(email, password)
+    .then((result) => {
+      const firebaseAuthUser = result.user;
+      firebaseAuthUser.getIdToken(true)
+        .then((idToken) => {
+          console.log(idToken);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
 }
 
 // サーバを起動する
