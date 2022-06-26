@@ -87,7 +87,8 @@ function handleEvent(event) {
   }
   const echoMessage = {
     type: 'text',
-    text: `「${event.message.text}」`
+    text: event.source.userId
+    //text: `「${event.message.text}」`
     //text: textStr + messageDict[client.id]
   };
 
