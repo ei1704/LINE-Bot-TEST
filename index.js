@@ -23,7 +23,7 @@ const firebaseConfig = {
 
 // firebase appの初期化
 firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
+const auth = getAuth();
 
 // 環境変数からチャネルアクセストークンとチャネルシークレットを取得する
 const config = {
