@@ -94,14 +94,16 @@ function handleEvent(event) {
 
   var textStr;
   // 返信用メッセージを組み立てる
-  if (userDatas[event.source.userId].messageDict == 'login') {
+  if (userDatas[event.source.userId]) {
+    if (userDatas[event.source.userId].messageDict == 'login') {
 
-  } else if (event.message.text == 'history') {
-    //ユーザの１つ前のメッセージを返すhistoryコマンド
-    if (userDatas[event.source.userId].messageDict) {
-      textStr = userDatas[event.source.userId].messageDict;
-    } else {
-      textStr = "履歴なし"
+    } else if (event.message.text == 'history') {
+      //ユーザの１つ前のメッセージを返すhistoryコマンド
+      if (userDatas[event.source.userId].messageDict != "") {
+        textStr = userDatas[event.source.userId].messageDict;
+      } else {
+        textStr = "履歴なし"
+      }
     }
   } else if (event.message.text == '認証' || event.message.text == 'login') {
     //認証コマンド
