@@ -116,7 +116,7 @@ async function handleEvent(event) {
       var temp = userDatas[event.source.userId].email;
 
       //await firebaseAuth.signInWithEmailAndPassword(temp, event.message.text)
-      await firebaseAuth.signInWithEmailAndPassword(userDatas[event.source.userId].email, event.message.text)
+      await firebase.auth().signInWithEmailAndPassword(userDatas[event.source.userId].email, event.message.text)
         .then((userCredential) => {
           console.log("login OK");
           // Signed in
@@ -160,7 +160,7 @@ async function handleEvent(event) {
 }
 
 
-firebaseAuth.onAuthStateChanged(firebaseUser => {
+firebase.auth().onAuthStateChanged(firebaseUser => {
   if (firebaseUser) {
     //認証OKの場合は，「認証OK」とメールアドレスをコンソールに表示する。
     console.log('認証OK：' + firebaseUser.email);
