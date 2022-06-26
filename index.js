@@ -1,7 +1,6 @@
 const line = require('@line/bot-sdk');
-const { text } = require('express');
 const express = require('express');
-const provider = new firebase.auth.GoogleAuthProvider()
+//const provider = new firebase.auth.GoogleAuthProvider()
 var userDatas = {
   foo: { "email": "example@example.com", "password": "foo", "messageDict": "" }
 };
@@ -58,7 +57,7 @@ app.post('/callback', line.middleware(config), (req, res) => {
 app.get('/', (req, res) => res.sendFile(__dirname + '/index.html'));
 //アクセスされたらメッセージ送信
 app.get('/push', (req, res) => {
-  broadCastMessage('botより送信');
+  broadCastMessage();
 });
 
 
@@ -70,10 +69,10 @@ app.get('/button', (req, res) => {
   }
 });
 
-const broadCastMessage = async (messageText) => {
+const broadCastMessage = async () => {
   const messages = [{
     type: 'text',
-    text: messageText
+    text: 'botより送信'
   }];
 
   try {
