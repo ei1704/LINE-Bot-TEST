@@ -8,6 +8,7 @@ var userDatas = {
 //import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 const firebase = require('firebase/app');
 const firebaseAuth = require('firebase/auth');
+const auth = getAuth();
 
 //firebaseの認証情報
 const firebaseConfig = {
@@ -113,9 +114,9 @@ async function handleEvent(event) {
       userDatas[event.source.userId].password = event.message.text;
       console.log("login now");
       var temp = userDatas[event.source.userId].email;
-      //const auth = getAuth();
+
       //await firebaseAuth.signInWithEmailAndPassword(temp, event.message.text)
-      await firebase.Auth().signInWithEmailAndPassword(userDatas[event.source.userId].email, event.message.text)
+      await firebase.auth().signInWithEmailAndPassword(userDatas[event.source.userId].email, event.message.text)
         .then((userCredential) => {
           console.log("login OK");
           // Signed in
