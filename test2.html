@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <Button onclick="clicked()">こんにちは！</Button>
+  <script>
+    var userDatas = {
+      foo: { "email": "example@example.com", "password": "foo", "messageDict": "" }
+    };
+    var receiveText = "login";
+    function clicked() {
+      var textStr;
+      // 返信用メッセージを組み立てる
+      if (userDatas["hoge"]) {
+        if (userDatas["hoge"].messageDict == 'login') {
+
+        } else if (receiveText == 'history') {
+          //ユーザの１つ前のメッセージを返すhistoryコマンド
+          if (userDatas["hoge"].messageDict != "") {
+            textStr = userDatas["hoge"].messageDict;
+          } else {
+            textStr = "履歴なし"
+          }
+        }
+      } else if (receiveText == '認証' || receiveText == 'login') {
+        //認証コマンド
+        textStr = 'メールアドレスを入力してください';
+        userDatas["hoge"] = { "email": "", "password": "", "messageDict": 'login' };
+      } else {
+        textStr = '「認証」もしくは「login」と入力し連携をして下さい。';
+      }
+
+      console.log(textStr);
+    }
+  </script>
+</body>
+
+</html>

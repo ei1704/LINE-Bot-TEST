@@ -1,8 +1,10 @@
 const line = require('@line/bot-sdk');
 const { text } = require('express');
 const express = require('express');
-var userDatas = [];
-/*
+var userDatas = {
+  foo: { "email": "example@example.com", "password": "foo", "messageDict": "" }
+};
+
 const firebase = require('firebase/app');
 const firebaseAuth = require('firebase/auth');
 
@@ -16,7 +18,7 @@ const firebaseConfig = {
   appId: "1:328972503263:web:870f5c8c6618d8a05fc16a",
   measurementId: "G-HSTBXVGJ9V"
 };
-*/
+
 
 // 環境変数からチャネルアクセストークンとチャネルシークレットを取得する
 const config = {
@@ -96,7 +98,13 @@ function handleEvent(event) {
   // 返信用メッセージを組み立てる
   if (userDatas[event.source.userId]) {
     if (userDatas[event.source.userId].messageDict == 'login') {
-
+      userDatas[event.source.userId].email = event.message.text;
+      textStr = "次にパスワードを入力してください";
+      userDatas[event.source.userId].messageDict = "password";
+    } else if (userDatas[event.source.userId].messageDict == 'password') {
+      userDatas[event.source.userId].password = event.message.text;
+      result = showFirebaseIdToken(userDatas[event.source.userId].email, userDatas[event.source.userId].password);
+      textStr = result;
     } else if (event.message.text == 'history') {
       //ユーザの１つ前のメッセージを返すhistoryコマンド
       if (userDatas[event.source.userId].messageDict != "") {
@@ -108,10 +116,10 @@ function handleEvent(event) {
   } else if (event.message.text == '認証' || event.message.text == 'login') {
     //認証コマンド
     textStr = 'メールアドレスを入力してください';
-    userDatas[event.source.userId].messageDict = 'login';
+    userDatas[event.source.userId].messageDict = { "email": "", "password": "", "messageDict": 'login' };
   } else {
-    textStr = 'そろそろ休憩しませんか？';
-    userDatas[event.source.userId].messageDict = event.message.text;
+    textStr = '「認証」もしくは「login」と入力し連携をして下さい。'
+    //userDatas[event.source.userId] = 
   }
   const echoMessage = {
     type: 'text',
@@ -126,7 +134,7 @@ function handleEvent(event) {
   // return client.pushMessage(event.source.userId, echoMessage);
 }
 
-/*
+
 // firebaseにアクセスしトークンを取得、表示する
 function showFirebaseIdToken(email, password) {
   // firebase appの初期化
@@ -139,17 +147,20 @@ function showFirebaseIdToken(email, password) {
       firebaseAuthUser.getIdToken(true)
         .then((idToken) => {
           console.log(idToken);
+          return idToken;
         })
         .catch((error) => {
           console.log(error);
+          return error;
         });
     })
     .catch(function (error) {
       console.log(error);
+      return error;
     });
 
 }
-*/
+
 
 // サーバを起動する
 const port = process.env.PORT || 8080;
