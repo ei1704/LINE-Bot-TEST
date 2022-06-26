@@ -9,7 +9,6 @@ var userDatas = {
 const firebase = require('firebase/app');
 const firebaseAuth = require('firebase/auth');
 
-
 //firebaseの認証情報
 const firebaseConfig = {
   apiKey: "AIzaSyAFHhTw4lUNSphTToflfGR4xlCrHZSBglY",
@@ -23,6 +22,7 @@ const firebaseConfig = {
 
 // firebase appの初期化
 firebase.initializeApp(firebaseConfig);
+//const auth = firebase.auth();
 const auth = getAuth();
 
 // 環境変数からチャネルアクセストークンとチャネルシークレットを取得する
@@ -114,7 +114,7 @@ async function handleEvent(event) {
       userDatas[event.source.userId].password = event.message.text;
       console.log("login now");
       var temp = userDatas[event.source.userId].email;
-
+      //const auth = getAuth();
       //await firebaseAuth.signInWithEmailAndPassword(temp, event.message.text)
       await firebase.auth().signInWithEmailAndPassword(userDatas[event.source.userId].email, event.message.text)
         .then((userCredential) => {
