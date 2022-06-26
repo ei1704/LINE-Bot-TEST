@@ -157,14 +157,7 @@ async function handleEvent(event) {
   // Push API を利用する場合は以下のようにする
   // return client.pushMessage(event.source.userId, echoMessage);
 }
-firebase.auth().onAuthStateChanged(user => {
-  if (user) {
-    console.log("Logged In!");
-    console.log(user);
-  } else {
-    console.log('Not Logged In!');
-  }
-});
+
 
 auth.onAuthStateChanged(firebaseUser => {
   if (firebaseUser) {
