@@ -160,7 +160,7 @@ async function handleEvent(event) {
 }
 
 
-firebase.auth().onAuthStateChanged(firebaseUser => {
+firebase.auth.onAuthStateChanged(firebaseUser => {
   if (firebaseUser) {
     //認証OKの場合は，「認証OK」とメールアドレスをコンソールに表示する。
     console.log('認証OK：' + firebaseUser.email);
