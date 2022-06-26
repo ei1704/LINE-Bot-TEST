@@ -113,10 +113,9 @@ async function handleEvent(event) {
       userDatas[event.source.userId].password = event.message.text;
       console.log("login now");
       var temp = userDatas[event.source.userId].email;
-      console.log(temp);
-      const auth = getAuth();
+      //const auth = getAuth();
       //await firebaseAuth.signInWithEmailAndPassword(temp, event.message.text)
-      await firebaseAuth.signInWithEmailAndPassword(auth, temp, event.message.text)
+      await firebase.Auth().signInWithEmailAndPassword(userDatas[event.source.userId].email, event.message.text)
         .then((userCredential) => {
           console.log("login OK");
           // Signed in
@@ -158,8 +157,15 @@ async function handleEvent(event) {
   // Push API を利用する場合は以下のようにする
   // return client.pushMessage(event.source.userId, echoMessage);
 }
+firebase.auth().onAuthStateChanged(user => {
+  if (user) {
+    console.log("Logged In!");
+    console.log(user);
+  } else {
+    console.log('Not Logged In!');
+  }
+});
 
-/*
 auth.onAuthStateChanged(firebaseUser => {
   if (firebaseUser) {
     //認証OKの場合は，「認証OK」とメールアドレスをコンソールに表示する。
@@ -171,7 +177,7 @@ auth.onAuthStateChanged(firebaseUser => {
     //btnLogout.style.display = "none";
   };
 });
-*/
+
 
 // サーバを起動する
 const port = process.env.PORT || 8080;
