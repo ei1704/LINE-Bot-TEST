@@ -1,7 +1,7 @@
 const line = require('@line/bot-sdk');
 const { text } = require('express');
 const express = require('express');
-var messageDict;
+var messageDict = [];
 
 // 環境変数からチャネルアクセストークンとチャネルシークレットを取得する
 const config = {
