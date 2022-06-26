@@ -5,7 +5,7 @@ var userDatas = {
   foo: { "email": "example@example.com", "password": "foo", "messageDict": "" }
 };
 
-/*
+
 const firebase = require('firebase/app');
 const firebaseAuth = require('firebase/auth');
 
@@ -19,7 +19,7 @@ const firebaseConfig = {
   appId: "1:328972503263:web:870f5c8c6618d8a05fc16a",
   measurementId: "G-HSTBXVGJ9V"
 };
-*/
+
 
 // 環境変数からチャネルアクセストークンとチャネルシークレットを取得する
 const config = {
@@ -136,7 +136,7 @@ function handleEvent(event) {
   // return client.pushMessage(event.source.userId, echoMessage);
 }
 
-/*
+
 // firebaseにアクセスしトークンを取得、表示する
 function showFirebaseIdToken(email, password) {
   // firebase appの初期化
@@ -162,7 +162,7 @@ function showFirebaseIdToken(email, password) {
     });
 
 }
-*/
+
 
 // サーバを起動する
 const port = process.env.PORT || 8080;
