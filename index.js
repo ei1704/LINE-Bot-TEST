@@ -111,7 +111,7 @@ async function handleEvent(event) {
       userDatas[event.source.userId].messageDict = "password";
     } else if (userDatas[event.source.userId].messageDict == 'password') {
       userDatas[event.source.userId].password = event.message.text;
-      await firebase.firebaseAuth.signInWithEmailAndPassword(userDatas[event.source.userId].email, userDatas[event.source.userId].password)
+      await firebase.auth().signInWithEmailAndPassword(userDatas[event.source.userId].email, userDatas[event.source.userId].password)
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
