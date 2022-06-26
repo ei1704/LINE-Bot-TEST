@@ -92,7 +92,7 @@ const broadCastMessage = async () => {
  * @param {*} event イベント
  * @return {Promise} テキストメッセージイベントの場合は client.pushMessage() の結果、それ以外は null
  */
-function handleEvent(event) {
+async function handleEvent(event) {
   // メッセージイベントではない場合、テキスト以外のメッセージの場合は何も処理しない
   if (event.type !== 'message' || event.message.type !== 'text') {
     return Promise.resolve(null);
