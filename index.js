@@ -37,8 +37,8 @@ const app = express();
 
 // LINE Bot SDK が提供するミドルウェアを挟み込み、リクエストヘッダの署名検証や JSON パースなどを任せてしまう
 app.post('/callback', line.middleware(config), (req, res) => {
-  console.log("hello");
-  console.log(client);
+  //console.log("hello");
+  //console.log(client);
   res.send(client);
   // 1回のリクエストに複数のメッセージが含まれていたりすることもあるので
   // イベントの配列を1件ずつ取得して処理してやる
@@ -111,8 +111,10 @@ async function handleEvent(event) {
       userDatas[event.source.userId].messageDict = "password";
     } else if (userDatas[event.source.userId].messageDict == 'password') {
       userDatas[event.source.userId].password = event.message.text;
+      console.log("login now");
       await firebase.auth().signInWithEmailAndPassword(userDatas[event.source.userId].email, userDatas[event.source.userId].password)
         .then((userCredential) => {
+          console.log("login OK");
           // Signed in
           const user = userCredential.user;
           res = user.uid;
@@ -120,11 +122,13 @@ async function handleEvent(event) {
           // ...
         })
         .catch((error) => {
+          console.log("login NG");
           const errorCode = error.code;
           const errorMessage = error.message;
           res = errorMessage;
           //console.log(res);
-        });;
+        });
+      console.log("END");
       textStr = res;
     } else if (event.message.text == 'history') {
       //ユーザの１つ前のメッセージを返すhistoryコマンド
