@@ -5,7 +5,7 @@ var userDatas = {
   foo: { "email": "example@example.com", "password": "foo", "messageDict": "" }
 };
 
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+//import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 const firebase = require('firebase/app');
 const firebaseAuth = require('firebase/auth');
 
