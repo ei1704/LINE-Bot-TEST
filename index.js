@@ -32,7 +32,7 @@ const config = {
 };
 // LINE クライアントを生成する : `channelSecret` が未定義だと例外が投げられる
 const client = new line.Client(config);
-
+const auth = getAuth();
 // Express アプリを生成する
 const app = express();
 
@@ -114,9 +114,9 @@ async function handleEvent(event) {
       userDatas[event.source.userId].password = event.message.text;
       console.log("login now");
       var temp = userDatas[event.source.userId].email;
-      const auth = getAuth();
+
       //await firebaseAuth.signInWithEmailAndPassword(temp, event.message.text)
-      await firebase.auth().signInWithEmailAndPassword(auth, userDatas[event.source.userId].email, event.message.text)
+      await firebase.auth().signInWithEmailAndPassword(userDatas[event.source.userId].email, event.message.text)
         .then((userCredential) => {
           console.log("login OK");
           // Signed in
