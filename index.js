@@ -1,5 +1,6 @@
 const line = require('@line/bot-sdk');
 const express = require('express');
+const firebaseAdmin = require('firebase-admin');
 //const provider = new firebase.auth.GoogleAuthProvider()
 var userDatas = {
   foo: { "email": "example@example.com", "password": "foo", "messageDict": "" }
@@ -135,6 +136,18 @@ async function handleEvent(event) {
         });
       console.log("END");
       textStr = res;
+
+      firebaseAuth.onAuthStateChanged(firebaseUser => {
+        if (firebaseUser) {
+          //認証OKの場合は，「認証OK」とメールアドレスをコンソールに表示する。
+          console.log('認証OK：' + firebaseUser.email);
+          //btnLogout.style.display = "inline";
+        } else {
+          //認証NGの場合は，「認証NG」とコンソールに表示する。
+          console.log('認証NG');
+          //btnLogout.style.display = "none";
+        };
+      });
     } else if (event.message.text == 'history') {
       //ユーザの１つ前のメッセージを返すhistoryコマンド
       if (userDatas[event.source.userId].messageDict != "") {
@@ -162,17 +175,6 @@ async function handleEvent(event) {
 
 
 
-firebaseAuth.onAuthStateChanged(firebaseUser => {
-  if (firebaseUser) {
-    //認証OKの場合は，「認証OK」とメールアドレスをコンソールに表示する。
-    console.log('認証OK：' + firebaseUser.email);
-    //btnLogout.style.display = "inline";
-  } else {
-    //認証NGの場合は，「認証NG」とコンソールに表示する。
-    console.log('認証NG');
-    //btnLogout.style.display = "none";
-  };
-});
 
 
 // サーバを起動する
