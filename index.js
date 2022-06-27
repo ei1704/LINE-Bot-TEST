@@ -1,16 +1,12 @@
-import express from "express";
-import firebase from "firebase";
-import line from '@line/bot-sdk';
-
-//const line = require('@line/bot-sdk');
-//const express = require('express');
+const line = require('@line/bot-sdk');
+const express = require('express');
 //const provider = new firebase.auth.GoogleAuthProvider()
 var userDatas = {
   foo: { "email": "example@example.com", "password": "foo", "messageDict": "" }
 };
 
 //import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-//const firebase = require('firebase/app');
+const firebase = require('firebase/app');
 //const firebaseAuth = require('firebase/auth');
 //const { getAuth } = require("firebase-admin/auth");
 
@@ -27,7 +23,7 @@ const firebaseConfig = {
 
 // firebase appの初期化
 firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
+//const auth = firebase.auth();
 //const auth = getAuth();
 
 // 環境変数からチャネルアクセストークンとチャネルシークレットを取得する
@@ -121,7 +117,7 @@ async function handleEvent(event) {
       var temp = userDatas[event.source.userId].email;
 
       //await firebaseAuth.signInWithEmailAndPassword(temp, event.message.text)
-      await auth.signInWithEmailAndPassword(userDatas[event.source.userId].email, event.message.text)
+      await firebase.auth().signInWithEmailAndPassword(userDatas[event.source.userId].email, event.message.text)
         .then((userCredential) => {
           console.log("login OK");
           // Signed in
@@ -137,7 +133,6 @@ async function handleEvent(event) {
           res = errorMessage;
           //console.log(res);
         });
-
       console.log("END");
       textStr = res;
     } else if (event.message.text == 'history') {
@@ -165,7 +160,9 @@ async function handleEvent(event) {
   // return client.pushMessage(event.source.userId, echoMessage);
 }
 
-auth.onAuthStateChanged(firebaseUser => {
+
+/*
+firebase.auth().onAuthStateChanged(firebaseUser => {
   if (firebaseUser) {
     //認証OKの場合は，「認証OK」とメールアドレスをコンソールに表示する。
     console.log('認証OK：' + firebaseUser.email);
@@ -176,8 +173,7 @@ auth.onAuthStateChanged(firebaseUser => {
     //btnLogout.style.display = "none";
   };
 });
-
-
+*/
 
 // サーバを起動する
 const port = process.env.PORT || 8080;
