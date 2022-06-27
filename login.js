@@ -22,6 +22,7 @@
   const btnLogin = document.getElementById('btnLogin');       //log inボタン
   const btnSignUp = document.getElementById('btnSignUp');     //Sign Upボタン
   const btnLogout = document.getElementById('btnLogout');     //Log outボタン
+  const statusvar = document.getElementById('status');
 
 
   //log inボタンがclickされたときの処理
@@ -63,10 +64,12 @@
     if (firebaseUser) {
       //認証OKの場合は，「認証OK」とメールアドレスをコンソールに表示する。
       console.log('認証OK：' + firebaseUser.email);
+      statusvar.innerText = '認証OK：' + firebaseUser.email;
       btnLogout.style.display = "inline";
     } else {
       //認証NGの場合は，「認証NG」とコンソールに表示する。
       console.log('認証NG');
+      statusvar.innerText = '認証NG';
       btnLogout.style.display = "none";
     };
   });

@@ -63,7 +63,7 @@ app.get('/push', (req, res) => {
   broadCastMessage();
 });
 
-app.get('login', (req, res) => res.sendFile(__dirname + '/login.html'));
+app.get('/login', (req, res) => res.sendFile(__dirname + '/login.html'));
 
 app.get('/button', (req, res) => {
   res.send('<Button onclick="clicked()">こんにちは！</Button>');
