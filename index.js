@@ -7,7 +7,8 @@ var userDatas = {
 
 //import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 const firebase = require('firebase/app');
-const firebaseAuth = require('firebase/auth');
+//const firebaseAuth = require('firebase/auth');
+//const { getAuth } = require("firebase-admin/auth");
 
 //firebaseの認証情報
 const firebaseConfig = {
@@ -132,6 +133,17 @@ async function handleEvent(event) {
           res = errorMessage;
           //console.log(res);
         });
+      firebase.auth().onAuthStateChanged(firebaseUser => {
+        if (firebaseUser) {
+          //認証OKの場合は，「認証OK」とメールアドレスをコンソールに表示する。
+          console.log('認証OK：' + firebaseUser.email);
+          //btnLogout.style.display = "inline";
+        } else {
+          //認証NGの場合は，「認証NG」とコンソールに表示する。
+          console.log('認証NG');
+          //btnLogout.style.display = "none";
+        };
+      });
       console.log("END");
       textStr = res;
     } else if (event.message.text == 'history') {
@@ -160,17 +172,7 @@ async function handleEvent(event) {
 }
 
 
-firebase.auth().onAuthStateChanged(firebaseUser => {
-  if (firebaseUser) {
-    //認証OKの場合は，「認証OK」とメールアドレスをコンソールに表示する。
-    console.log('認証OK：' + firebaseUser.email);
-    //btnLogout.style.display = "inline";
-  } else {
-    //認証NGの場合は，「認証NG」とコンソールに表示する。
-    console.log('認証NG');
-    //btnLogout.style.display = "none";
-  };
-});
+
 
 
 // サーバを起動する
