@@ -63,6 +63,7 @@ app.get('/push', (req, res) => {
   broadCastMessage();
 });
 
+app.get('login', (req, res) => res.sendFile(__dirname + '/login.html'));
 
 app.get('/button', (req, res) => {
   res.send('<Button onclick="clicked()">こんにちは！</Button>');
@@ -87,8 +88,6 @@ const broadCastMessage = async () => {
   }
 };
 
-
-
 /**
  * イベント1件を処理する
  * 
@@ -105,50 +104,9 @@ async function handleEvent(event) {
   // 返信用メッセージを組み立てる
   if (event.message.text == '認証' || event.message.text == 'login') {
     //認証コマンド
-    textStr = 'メールアドレスを入力してください';
-    userDatas[event.source.userId] = { "email": "", "password": "", "messageDict": 'login' };
+    textStr = 'https://bot-test1231.herokuapp.com/login\n上記アドレスで認証を行ってください';
   } else if (userDatas[event.source.userId]) {
-    if (userDatas[event.source.userId].messageDict == 'login') {
-      userDatas[event.source.userId].email = event.message.text;
-      textStr = "次にパスワードを入力してください";
-      userDatas[event.source.userId].messageDict = "password";
-    } else if (userDatas[event.source.userId].messageDict == 'password') {
-      userDatas[event.source.userId].password = event.message.text;
-      console.log("login now");
-      var temp = userDatas[event.source.userId].email;
-
-      //await firebaseAuth.signInWithEmailAndPassword(temp, event.message.text)
-      await firebaseAuth.signInWithEmailAndPassword(userDatas[event.source.userId].email, event.message.text)
-        .then((userCredential) => {
-          console.log("login OK");
-          // Signed in
-          const user = userCredential.user;
-          res = user.uid;
-          //console.log(res);
-          // ...
-        })
-        .catch((error) => {
-          console.log("login NG");
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          res = errorMessage;
-          //console.log(res);
-        });
-      console.log("END");
-      textStr = res;
-
-      firebaseAuth.onAuthStateChanged(firebaseUser => {
-        if (firebaseUser) {
-          //認証OKの場合は，「認証OK」とメールアドレスをコンソールに表示する。
-          console.log('認証OK：' + firebaseUser.email);
-          //btnLogout.style.display = "inline";
-        } else {
-          //認証NGの場合は，「認証NG」とコンソールに表示する。
-          console.log('認証NG');
-          //btnLogout.style.display = "none";
-        };
-      });
-    } else if (event.message.text == 'history') {
+    if (event.message.text == 'history') {
       //ユーザの１つ前のメッセージを返すhistoryコマンド
       if (userDatas[event.source.userId].messageDict != "") {
         textStr = userDatas[event.source.userId].messageDict;
