@@ -11,6 +11,7 @@ const firebase = require('firebase/app');
 const firebaseAuth = require('firebase/auth');
 //const { getAuth } = require("firebase-admin/auth");
 
+
 //firebaseの認証情報
 const firebaseConfig = {
   apiKey: "AIzaSyAFHhTw4lUNSphTToflfGR4xlCrHZSBglY",
