@@ -1,12 +1,16 @@
-const line = require('@line/bot-sdk');
-const express = require('express');
+import express from "express";
+import firebase from "firebase";
+import line from '@line/bot-sdk';
+
+//const line = require('@line/bot-sdk');
+//const express = require('express');
 //const provider = new firebase.auth.GoogleAuthProvider()
 var userDatas = {
   foo: { "email": "example@example.com", "password": "foo", "messageDict": "" }
 };
 
 //import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-const firebase = require('firebase/app');
+//const firebase = require('firebase/app');
 //const firebaseAuth = require('firebase/auth');
 //const { getAuth } = require("firebase-admin/auth");
 
