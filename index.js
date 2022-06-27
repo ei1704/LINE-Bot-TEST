@@ -1,6 +1,6 @@
 const line = require('@line/bot-sdk');
 const express = require('express');
-const firebaseAdmin = require('firebase-admin');
+//const firebaseAdmin = require('firebase-admin');
 //const provider = new firebase.auth.GoogleAuthProvider()
 var userDatas = {
   foo: { "email": "example@example.com", "password": "foo", "messageDict": "" }
