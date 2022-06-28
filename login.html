@@ -90,6 +90,7 @@
         console.log('認証OK：' + firebaseUser.email);
         statusvar.innerText = '認証OK：' + firebaseUser.email;
         btnLogout.style.display = "inline";
+        const xhr = new XMLHttpRequest();
         xhr.open('POST', 'https://bot-test1231.herokuapp.com/sendid', true);
         xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
         // フォームに入力した値をリクエストとして設定
