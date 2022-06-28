@@ -92,11 +92,11 @@
         btnLogout.style.display = "inline";
         const xhr = new XMLHttpRequest();
         var request = "uid=" + firebaseUser.uid;
-        xhr.open('POST', 'https://bot-test1231.herokuapp.com/sendid',true);
+        xhr.open('POST', 'https://bot-test1231.herokuapp.com/sendid', true);
         xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
         // フォームに入力した値をリクエストとして設定
         //var request = "arg1=" + arg1.value + "&arg2=" + arg2.value;
-        xhr.send(encodeFormData({uid: firebaseUser.uid}));
+        xhr.send(encodeFormData({ uid: firebaseUser.uid }));
       } else {
         //認証NGの場合は，「認証NG」とコンソールに表示する。
         console.log('認証NG');
@@ -104,6 +104,19 @@
         btnLogout.style.display = "none";
       };
     });
+
+    var encodeFormData = function (data) {
+      if (!data) return '';
+      var params = [];
+      for (var name in data) {
+        var key = encodeURIComponent(name.replace(' ', '+'));
+        var value = encodeURIComponent(data[name].toString().replace(' ', '+'));
+        params.push(key + '=' + value);
+      }
+      console.log(params.join('&'));
+      return params.join('&');
+    }
+
   </script>
   <!-- <script src="./login.js"></script> -->
 </body>
