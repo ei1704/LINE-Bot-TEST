@@ -66,6 +66,11 @@ app.get('/push', (req, res) => {
 
 app.get('/login', (req, res) => res.sendFile(__dirname + '/login.html'));
 
+app.get('/sendid',(req,res) => {
+  console.log("send UID")
+});
+
+
 app.get('/button', (req, res) => {
   res.send('<Button onclick="clicked()">こんにちは！</Button>');
   console.log(client);
