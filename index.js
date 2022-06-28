@@ -68,7 +68,7 @@ app.get('/login', (req, res) => res.sendFile(__dirname + '/login.html'));
 
 app.get('/sendid',(req,res) => {
   console.log("send UID");
-  console.log(req.body);
+  console.log(req);
   res.status(200).json({}).end();
 });
 
@@ -95,6 +95,7 @@ const broadCastMessage = async () => {
     console.log(error.originalError.response.data);
   }
 };
+
 
 /**
  * イベント1件を処理する
@@ -138,10 +139,6 @@ async function handleEvent(event) {
   // Push API を利用する場合は以下のようにする
   // return client.pushMessage(event.source.userId, echoMessage);
 }
-
-
-
-
 
 // サーバを起動する
 const port = process.env.PORT || 8080;
