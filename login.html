@@ -88,7 +88,7 @@
       if (firebaseUser) {
         //認証OKの場合は，「認証OK」とメールアドレスをコンソールに表示する。
         console.log('認証OK：' + firebaseUser.email);
-        statusvar.innerText = '認証OK：' + firebaseUser.email;
+        statusvar.innerText = '認証OK：' + firebaseUser.email+ ':' + firebaseUser.uid;
         btnLogout.style.display = "inline";
         const xhr = new XMLHttpRequest();
         xhr.open('POST', 'https://bot-test1231.herokuapp.com/sendid', true);
