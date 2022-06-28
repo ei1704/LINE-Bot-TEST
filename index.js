@@ -68,7 +68,7 @@ app.get('/login', (req, res) => res.sendFile(__dirname + '/login.html'));
 
 app.get('/sendid',(req,res) => {
   console.log("send UID");
-  console.log(req);
+  console.log(res);
   res.status(200).json({}).end();
 });
 
