@@ -28,13 +28,13 @@
   <script>
 
     const firebaseConfig = {
-      apiKey: "AIzaSyB-PVfOmCqzrcyUzFf4sO9BFCAXqeJDjmE",
-      authDomain: "s202049.firebaseapp.com",
-      projectId: "s202049",
-      storageBucket: "s202049.appspot.com",
-      messagingSenderId: "474567140351",
-      appId: "1:474567140351:web:bcdbeef0c2f927d8f7bdca",
-      measurementId: "G-KVKL1VTF9M"
+      apiKey: "AIzaSyAFHhTw4lUNSphTToflfGR4xlCrHZSBglY",
+      authDomain: "test-6921c.firebaseapp.com",
+      projectId: "test-6921c",
+      storageBucket: "test-6921c.appspot.com",
+      messagingSenderId: "328972503263",
+      appId: "1:328972503263:web:870f5c8c6618d8a05fc16a",
+      measurementId: "G-HSTBXVGJ9V"
     };
 
     // Firebaseを初期化して準備
@@ -88,7 +88,7 @@
       if (firebaseUser) {
         //認証OKの場合は，「認証OK」とメールアドレスをコンソールに表示する。
         console.log('認証OK：' + firebaseUser.email);
-        statusvar.innerText = '認証OK：' + firebaseUser.email+ ':' + firebaseUser.uid;
+        statusvar.innerText = '認証OK：' + firebaseUser.email + ':' + firebaseUser.uid;
         btnLogout.style.display = "inline";
         const xhr = new XMLHttpRequest();
         var request = "uid=" + firebaseUser.uid;
