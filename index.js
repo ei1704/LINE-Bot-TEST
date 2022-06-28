@@ -78,10 +78,10 @@ app.get('/push', (req, res) => {
 
 app.get('/login', (req, res) => res.sendFile(__dirname + '/login.html'));
 
-app.get('/sendid',(req,res) => {
+app.post('/sendid',(req,res) => {
   console.log("send UID");
   console.log(req+'\n-----------------------------------------------------------------------------------');
-  console.log(req.body);
+  console.log(req.body.uid);
   //console.log(req.query.uid);
   res.status(200).json({}).end();
 });
