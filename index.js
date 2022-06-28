@@ -1,5 +1,7 @@
 const line = require('@line/bot-sdk');
 const express = require('express');
+const bodyParser = require('body-parser');
+
 //const firebaseAdmin = require('firebase-admin');
 //const provider = new firebase.auth.GoogleAuthProvider()
 var userDatas = {
@@ -38,6 +40,8 @@ const client = new line.Client(config);
 //const auth = getAuth();
 // Express アプリを生成する
 const app = express();
+app.use(bodyParser.urlencoded({ extended: true }));
+
 
 // LINE Bot SDK が提供するミドルウェアを挟み込み、リクエストヘッダの署名検証や JSON パースなどを任せてしまう
 app.post('/callback', line.middleware(config), (req, res) => {
@@ -68,7 +72,8 @@ app.get('/login', (req, res) => res.sendFile(__dirname + '/login.html'));
 
 app.get('/sendid',(req,res) => {
   console.log("send UID");
-  console.log(res);
+  console.log(req.body);
+  console.log(req.body.uid);
   res.status(200).json({}).end();
 });
 
