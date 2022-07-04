@@ -103,7 +103,7 @@ app.post('/serveMessage', (req, res) => {
 const serveMessage = async (uid, time) => {
   const message = {
     type: 'text',
-    text: 'PCで' + (time) + '時間作業開始しました\nそろそろ休憩しませんか？'
+    text: 'PCで' + (time) + '時間作業しました\nそろそろ休憩しませんか？'
   };
 
   client.pushMessage(userDatas[uid], message)
