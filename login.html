@@ -49,6 +49,16 @@
     const btnLogout = document.getElementById('btnLogout');     //Log outボタン
     const statusvar = document.getElementById('status');
 
+    // URLを取得
+    let url = new URL(window.location.href);
+
+    // URLSearchParamsオブジェクトを取得
+    let params = url.searchParams;
+
+    // getメソッド
+    console.log(params.get('user'));
+    let line_id = params.get('user');
+
     //log inボタンがclickされたときの処理
     btnLogin.addEventListener('click', e => {
       const email = txtEmail.value;   //メールアドレスを取得
@@ -96,7 +106,10 @@
         xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
         // フォームに入力した値をリクエストとして設定
         //var request = "arg1=" + arg1.value + "&arg2=" + arg2.value;
-        xhr.send(encodeFormData({ uid: firebaseUser.uid }));
+        xhr.send(encodeFormData({
+          uid: firebaseUser.uid,
+          lineId: line_id
+        }));
       } else {
         //認証NGの場合は，「認証NG」とコンソールに表示する。
         console.log('認証NG');

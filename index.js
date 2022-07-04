@@ -42,7 +42,7 @@ const client = new line.Client(config);
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", '*');
   res.header("Access-Control-Allow-Credentials", true);
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
@@ -78,10 +78,11 @@ app.get('/push', (req, res) => {
 
 app.get('/login', (req, res) => res.sendFile(__dirname + '/login.html'));
 
-app.post('/sendid',(req,res) => {
+app.post('/sendid', (req, res) => {
   console.log("send UID");
-  console.log(req+'\n-----------------------------------------------------------------------------------');
+  console.log(req + '\n-----------------------------------------------------------------------------------');
   console.log(req.body.uid);
+  console.log(req.body.lineId);
   //console.log(req.query.uid);
   res.status(200).json({}).end();
 });
@@ -127,7 +128,7 @@ async function handleEvent(event) {
   // 返信用メッセージを組み立てる
   if (event.message.text == '認証' || event.message.text == 'login') {
     //認証コマンド
-    textStr = 'https://bot-test1231.herokuapp.com/login\n上記アドレスで認証を行ってください';
+    textStr = 'https://bot-test1231.herokuapp.com/login?user=' + event.source.userId + '\n上記アドレスで認証を行ってください';
   } else if (userDatas[event.source.userId]) {
     if (event.message.text == 'history') {
       //ユーザの１つ前のメッセージを返すhistoryコマンド
