@@ -4,9 +4,12 @@ const bodyParser = require('body-parser');
 
 //const firebaseAdmin = require('firebase-admin');
 //const provider = new firebase.auth.GoogleAuthProvider()
+/*
 var userDatas = {
   foo: { "email": "example@example.com", "password": "foo", "messageDict": "" }
 };
+*/
+var userDatas = { "testid": "dummy" };
 
 //import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 const firebase = require('firebase/app');
@@ -85,7 +88,33 @@ app.post('/sendid', (req, res) => {
   console.log(req.body.lineId);
   //console.log(req.query.uid);
   res.status(200).json({}).end();
+  userDatas[req.body.uid] = req.body.lineId;
 });
+
+app.post('/serveMessage', (req, res) => {
+  console.log("serveMessage");
+  console.log(req + '\n-----------------------------------------------------------------------------------');
+  console.log(req.body.uid);
+  //console.log(req.query.uid);
+  res.status(200).json({}).end();
+  serveMessage(req.body.uid, req.body.time)
+});
+
+const serveMessage = async (uid, time) => {
+  const message = {
+    type: 'text',
+    text: 'PCで' + (time) + '時間作業開始しました\nそろそろ休憩しませんか？'
+  };
+
+  client.pushMessage(uid, message)
+    .then(() => {
+      console.log("送信成功");
+    })
+    .catch((err) => {
+      // error handling
+      console.log("送信エラー:" + err);
+    });
+};
 
 
 app.get('/button', (req, res) => {
