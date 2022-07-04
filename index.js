@@ -81,6 +81,7 @@ app.get('/push', (req, res) => {
 
 app.get('/login', (req, res) => res.sendFile(__dirname + '/login.html'));
 
+//C#からの通信を得てLINEのIDを識別、メッセージ送信
 app.post('/sendid', (req, res) => {
   console.log("send UID");
   console.log(req + '\n-----------------------------------------------------------------------------------');
