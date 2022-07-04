@@ -106,7 +106,7 @@ const serveMessage = async (uid, time) => {
     text: 'PCで' + (time) + '時間作業開始しました\nそろそろ休憩しませんか？'
   };
 
-  client.pushMessage(uid, message)
+  client.pushMessage(userDatas[uid], message)
     .then(() => {
       console.log("送信成功");
     })
