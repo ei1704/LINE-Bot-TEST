@@ -46,7 +46,7 @@ const serviceAccount = require(credentialPath);
 
 // Firebaseの初期化
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount)
+  credential: cert(serviceAccount)
 });
 
 const db = getFirestore();
