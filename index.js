@@ -107,7 +107,7 @@ app.post('/uidSetting', (req, res) => {
   console.log("setting uid");
   console.log(req + '\n-----------------------------------------------------------------------------------');
   if (!(ids.includes(req.body.uid))) {
-    ids.append(req.body.uid);
+    ids.push(req.body.uid);
     console.log("setting Uid:" + req.body.uid);
   } else {
     console.log("alredy setting:" + req.body.uid);
@@ -168,7 +168,7 @@ async function handleEvent(event) {
     return Promise.resolve(null);
   }
 
-  var textStr;
+  var textStr = "";
   // 返信用メッセージを組み立てる
   if (event.message.text == 'delete' || event.message.text == '連携解除') {
     delete userDatas[userDatas[event.source.userId]];
