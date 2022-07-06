@@ -57,7 +57,7 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.get('/get', (req, res) => {
+app.get('/get', async (req, res) => {
   ids.forEach(function (element) {
     const userRef = db.collection('test').doc(element);
     const snapshot = await userRef.get();
