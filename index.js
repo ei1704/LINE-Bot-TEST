@@ -13,7 +13,7 @@ var userDatas = { "testid": "dummy" };
 var ids = ["33r43(ID)"];
 
 //import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-const firebase = require('firebase/app');
+//const firebase = require('firebase/app');
 //const db = firebase.firestore();
 //const firebaseAuth = require('firebase/auth');
 
@@ -36,7 +36,7 @@ const firebaseConfig = {
 
 
 // firebase appの初期化
-firebase.initializeApp(firebaseConfig);
+//firebase.initializeApp(firebaseConfig);
 //const auth = firebase.auth();
 //const auth = getAuth();
 
