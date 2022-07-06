@@ -14,7 +14,10 @@ var ids = ["33r43(ID)"];
 
 //import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 const firebase = require('firebase/app');
-const firebaseAuth = require('firebase/auth');
+const db = firebase.firestore();
+//const firebaseAuth = require('firebase/auth');
+//const credentialPath = __dirname + './test-6921c-firebase-adminsdk-hnxwh-33909c6681.json'
+//const serviceAccount = require(credentialPath);
 //const { getAuth } = require("firebase-admin/auth");
 
 
@@ -54,6 +57,15 @@ app.use(function (req, res, next) {
   next();
 });
 
+app.get('/get', (req, res) => {
+  ids.forEach(function (element) {
+    const userRef = db.collection('test').doc(element);
+    const snapshot = await userRef.get();
+    snapshot.forEach(doc => {
+      console.log(doc.id, '=>', doc.data());
+    });
+  });
+});
 
 // LINE Bot SDK が提供するミドルウェアを挟み込み、リクエストヘッダの署名検証や JSON パースなどを任せてしまう
 app.post('/callback', line.middleware(config), (req, res) => {
@@ -72,6 +84,8 @@ app.post('/callback', line.middleware(config), (req, res) => {
       res.status(200).json({}).end();
     }))
 });
+
+
 
 //app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', (req, res) => res.sendFile(__dirname + '/index.html'));
