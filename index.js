@@ -90,6 +90,7 @@ app.post('/sendid', (req, res) => {
   //console.log(req.query.uid);
   res.status(200).json({}).end();
   userDatas[req.body.uid] = req.body.lineId;
+  userDatas[req.body.lineId] = req.body.uid;
 });
 
 app.post('/serveMessage', (req, res) => {
@@ -168,6 +169,8 @@ async function handleEvent(event) {
         textStr = "履歴なし"
       }
     }
+  } else if (userDatas.include(event.source.userId)) {
+    textStr = "連携済み：" + userDatas[event.source.userId];
   } else {
     textStr = '「認証」もしくは「login」と入力し連携をして下さい。'
     //userDatas[event.source.userId] = 
