@@ -57,10 +57,10 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.get('/get', async (req, res) => {
+app.get('/get', (req, res) => {
   ids.forEach(function (element) {
     const userRef = db.collection('test').doc(element);
-    const snapshot = await userRef.get();
+    const snapshot = userRef.get();
     snapshot.forEach(doc => {
       console.log(doc.id, '=>', doc.data());
     });
