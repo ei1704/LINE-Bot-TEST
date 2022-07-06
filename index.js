@@ -14,10 +14,19 @@ var ids = ["33r43(ID)"];
 
 //import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 const firebase = require('firebase/app');
-const db = firebase.firestore();
+//const db = firebase.firestore();
 //const firebaseAuth = require('firebase/auth');
-//const credentialPath = __dirname + './test-6921c-firebase-adminsdk-hnxwh-33909c6681.json'
-//const serviceAccount = require(credentialPath);
+const credentialPath = __dirname + './test-6921c-firebase-adminsdk-hnxwh-33909c6681.json'
+const admin = require('firebase-admin');
+const serviceAccount = require(credentialPath);
+
+// Firebaseの初期化
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount)
+})
+
+const db = admin.firestore()
+
 //const { getAuth } = require("firebase-admin/auth");
 
 
