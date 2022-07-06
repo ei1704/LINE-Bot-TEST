@@ -32,6 +32,18 @@ const firebaseConfig = {
   measurementId: "G-HSTBXVGJ9V"
 };
 
+const credentialPath = __dirname + './test-6921c-firebase-adminsdk-hnxwh-33909c6681.json';
+const admin = require('firebase-admin');
+const serviceAccount = require(credentialPath);
+
+// Firebaseの初期化
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount)
+});
+
+const db = admin.firestore();
+
+
 // firebase appの初期化
 firebase.initializeApp(firebaseConfig);
 //const auth = firebase.auth();
@@ -57,16 +69,6 @@ app.use(function (req, res, next) {
   next();
 });
 
-const credentialPath = __dirname + './test-6921c-firebase-adminsdk-hnxwh-33909c6681.json';
-const admin = require('firebase-admin');
-const serviceAccount = require(credentialPath);
-
-// Firebaseの初期化
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount)
-});
-
-const db = admin.firestore()
 
 app.get('/get', (req, res) => {
   ids.forEach(function (element) {
