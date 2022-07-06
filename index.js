@@ -10,6 +10,7 @@ var userDatas = {
 };
 */
 var userDatas = { "testid": "dummy" };
+var ids = ["33r43(ID)"];
 
 //import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 const firebase = require('firebase/app');
@@ -102,6 +103,18 @@ app.post('/serveMessage', (req, res) => {
   serveMessage(req.body.uid, req.body.time)
 });
 
+app.post('/uidSetting', (req, res) => {
+  console.log("setting uid");
+  console.log(req + '\n-----------------------------------------------------------------------------------');
+  if (!(ids.includes(req.body.uid))) {
+    ids.append(req.body.uid);
+    console.log("setting Uid:" + req.body.uid);
+  } else {
+    console.log("alredy setting:" + req.body.uid);
+  }
+  res.status(200).json({}).end();
+});
+
 const serveMessage = async (uid, time) => {
   const message = {
     type: 'text',
@@ -161,6 +174,11 @@ async function handleEvent(event) {
     delete userDatas[userDatas[event.source.userId]];
     delete userDatas[event.source.userId];
     textStr = "連係解除しました。";
+  } else if (event.message.text == 'ids') {
+    ids.forEach(function (element) {
+      console.log(element);
+      textStr += element + "\n";
+    });
   } else if (event.message.text == '認証' || event.message.text == 'login') {
     //認証コマンド
     textStr = 'https://bot-test1231.herokuapp.com/login?user=' + event.source.userId + '\n上記アドレスで認証を行ってください';
