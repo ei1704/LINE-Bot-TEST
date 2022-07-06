@@ -157,7 +157,11 @@ async function handleEvent(event) {
 
   var textStr;
   // 返信用メッセージを組み立てる
-  if (event.message.text == '認証' || event.message.text == 'login') {
+  if (event.message.text == 'delete' || event.message.text == '連携解除') {
+    delete userDatas[userDatas[event.source.userId]];
+    delete userDatas[event.source.userId];
+    textStr = "連係解除しました。";
+  } else if (event.message.text == '認証' || event.message.text == 'login') {
     //認証コマンド
     textStr = 'https://bot-test1231.herokuapp.com/login?user=' + event.source.userId + '\n上記アドレスで認証を行ってください';
   } else if (userDatas[event.source.userId]) {
@@ -168,9 +172,9 @@ async function handleEvent(event) {
       } else {
         textStr = "履歴なし"
       }
+    } else {
+      textStr = "連携済み：" + userDatas[event.source.userId];
     }
-  } else if (userDatas.include(event.source.userId)) {
-    textStr = "連携済み：" + userDatas[event.source.userId];
   } else {
     textStr = '「認証」もしくは「login」と入力し連携をして下さい。'
     //userDatas[event.source.userId] = 
