@@ -49,6 +49,7 @@ admin.initializeApp({
   credential: cert(serviceAccount)
 });
 
+
 const db = getFirestore();
 
 // 環境変数からチャネルアクセストークンとチャネルシークレットを取得する
