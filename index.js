@@ -49,7 +49,7 @@ admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
 });
 
-const db = admin.firestore();
+const db = getFirestore();
 
 // 環境変数からチャネルアクセストークンとチャネルシークレットを取得する
 const config = {
