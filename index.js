@@ -32,6 +32,7 @@ const firebaseConfig = {
   measurementId: "G-HSTBXVGJ9V"
 };
 
+/*
 const credentialPath = __dirname + './test-6921c-firebase-adminsdk-hnxwh-33909c6681.json';
 const admin = require('firebase-admin');
 const serviceAccount = require(credentialPath);
@@ -42,10 +43,10 @@ admin.initializeApp({
 });
 
 const db = admin.firestore();
-
-
+*/
 // firebase appの初期化
 firebase.initializeApp(firebaseConfig);
+constdb = firebase.firestore();
 //const auth = firebase.auth();
 //const auth = getAuth();
 
