@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="ja">
-
+  <meta property="og:title" content="HealthWorker連携フォーム"> 
+  <meta property="og:description" content="こちらから連携を行ってください">
 <head>
+
   <meta charset="utf-8">
-  <title>Firebase Web Quickstart</title>
+  <title>HealthWorker連携フォーム</title>
 
   <!-- firebaseSDKの参照を追加する -->
   <!-- The core Firebase JS SDK is always required and must be listed first -->
@@ -11,20 +13,130 @@
 
   <!-- FirebaseAuthenticationの参照を追加する -->
   <script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-auth.js"></script>
+  <style>
+    @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
+    #status{
+      position: relative;
+      padding: 15px; 
+      text-align: center;
+      font-family: "Roboto", sans-serif;
+      color:white;
+    }
+    .login-page {
+      width: 500px;
+      padding: 8% 0 0;
+      margin: auto;
+    }
+
+    .form {
+      position: relative;
+      z-index: 1;
+      background: #FFFFFF;
+      max-width: 500px;
+      margin: 0 auto 20px;
+      padding: 45px;
+      text-align: center;
+      box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+    }
+
+    .form input {
+      font-family: "Roboto", sans-serif;
+      outline: 0;
+      background: #f2f2f2;
+      width: 100%;
+      border: 0;
+      margin: 0 0 15px;
+      padding: 15px;
+      box-sizing: border-box;
+      font-size: 14px;
+    }
+
+    .form button {
+      font-family: "Roboto", sans-serif;
+      text-transform: uppercase;
+      outline: 0;
+      background: #4CAF50;
+      width: 100%;
+      border: 0;
+      padding: 15px;
+      color: #FFFFFF;
+      font-size: 14px;
+      -webkit-transition: all 0.3 ease;
+      transition: all 0.3 ease;
+      cursor: pointer;
+    }
+
+    .form button:hover,
+    .form button:active,
+    .form button:focus {
+      background: #43A047;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 300px;
+      margin: 0 auto;
+    }
+
+    .container:before,
+    .container:after {
+      content: "";
+      display: block;
+      clear: both;
+    }
+
+    .container .info {
+      margin: 50px auto;
+      text-align: center;
+    }
+
+    .container .info h1 {
+      margin: 0 0 15px;
+      padding: 0;
+      font-size: 36px;
+      font-weight: 300;
+      color: #1a1a1a;
+    }
+
+    .container .info span {
+      color: #4d4d4d;
+      font-size: 12px;
+    }
+
+    .container .info span a {
+      color: #000000;
+      text-decoration: none;
+    }
+
+    .container .info span .fa { 
+      color: #EF3B3A;
+    }
+
+    body {
+      background: #76b852;
+      /* fallback for old browsers */
+      background: rgb(141, 194, 111);
+      background: linear-gradient(90deg, rgba(141, 194, 111, 1) 0%, rgba(118, 184, 82, 1) 50%);
+      font-family: "Roboto", sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+  </style>
 </head>
 
 <body>
-  <input <input id="txtEmail" type="email" placeholder="Email"><br />
+  <div class="login-page">
+    <div class="form">
+      <input id="txtEmail" type="email" placeholder="Email" />
+      <input id="txtPassword" type="password" placeholder="password" />
+      <button id="btnLogin">login</button>
+    </div>
+    <div id="status"></div>
+  </div>
 
-  <input id="txtPassword" type="password" placeholder="Password"><br />
-
-  <button id="btnLogin">log in</button>
-
-  <button id="btnSignUp">Sign Up</button>
-
-  <button id="btnLogout">Log out</button>
-  <div id="status">none</div>
+ 
   <script>
 
     const firebaseConfig = {
@@ -45,47 +157,33 @@
     const txtEmail = document.getElementById('txtEmail');       //メールアドレス
     const txtPassword = document.getElementById('txtPassword'); //パスワード
     const btnLogin = document.getElementById('btnLogin');       //log inボタン
-    const btnSignUp = document.getElementById('btnSignUp');     //Sign Upボタン
-    const btnLogout = document.getElementById('btnLogout');     //Log outボタン
     const statusvar = document.getElementById('status');
 
     // URLを取得
     let url = new URL(window.location.href);
 
     // URLSearchParamsオブジェクトを取得
-    let params = url.searchParams;
+    let params = url.searchParams,flg=false;
 
     // getメソッド
     console.log(params.get('user'));
     let line_id = params.get('user');
 
     //log inボタンがclickされたときの処理
+
     btnLogin.addEventListener('click', e => {
+
       const email = txtEmail.value;   //メールアドレスを取得
       const pass = txtPassword.value; //パスワードを取得
 
       //メールアドレスとパスワードを使って，ログインを試みる
       const promise = auth.signInWithEmailAndPassword(email, pass);
+      flg = true;
 
       //エラーになった場合に，コンソールにエラーを表示する。 
       promise.catch(e => console.log(e.message));
 
     });
-
-    //Sign upボタンのclickされたときの処理
-    btnSignUp.addEventListener('click', e => {
-      const email = txtEmail.value;   //メールアドレスを取得
-      const pass = txtPassword.value; //パスワードを取得
-
-      //メールアドレスとパスワードにより，新規作成する。
-      const promise = auth.createUserWithEmailAndPassword(email, pass);
-
-      //エラーになった場合にコンソールにエラーを表示する。 
-      promise.catch(e => console.log(e.message));
-    });
-
-    //Log outボタンがclickされたときの処理
-    btnLogout.addEventListener('click', e => firebase.auth().signOut());
 
     //ログイン状態が変化した（認証がOKになった，認証がNGになった）場合に
     //自動的に実行される関数。コールバック関数という。
@@ -97,9 +195,12 @@
     auth.onAuthStateChanged(firebaseUser => {
       if (firebaseUser) {
         //認証OKの場合は，「認証OK」とメールアドレスをコンソールに表示する。
+
         console.log('認証OK：' + firebaseUser.email);
-        statusvar.innerText = '認証OK：' + firebaseUser.email + ':' + firebaseUser.uid;
-        btnLogout.style.display = "inline";
+        if(flg){
+          statusvar.innerText = '連携完了\nメールアドレス：' + firebaseUser.email+"\nこのページは閉じて頂いて構いません";
+          statusvar.style.display = "inline";
+        }
         const xhr = new XMLHttpRequest();
         var request = "uid=" + firebaseUser.uid;
         xhr.open('POST', 'https://bot-test1231.herokuapp.com/sendid', true);
@@ -113,8 +214,7 @@
       } else {
         //認証NGの場合は，「認証NG」とコンソールに表示する。
         console.log('認証NG');
-        statusvar.innerText = '認証NG';
-        btnLogout.style.display = "none";
+        statusvar.style.display ="none";
       };
     });
 

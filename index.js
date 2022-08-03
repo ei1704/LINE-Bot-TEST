@@ -40,7 +40,9 @@ const firebaseConfig = {
 //const auth = firebase.auth();
 //const auth = getAuth();
 
-const credentialPath = __dirname + './test-6921c-firebase-adminsdk-hnxwh-33909c6681.json';
+//const credentialPath = __dirname + './test-6921c-firebase-adminsdk-hnxwh-33909c6681.json';
+/*
+const credentialPath = './test-6921c-firebase-adminsdk-hnxwh-33909c6681.json';
 const admin = require('firebase-admin');
 const serviceAccount = require(credentialPath);
 
@@ -50,7 +52,8 @@ admin.initializeApp({
 });
 
 
-const db = getFirestore();
+const db = admin.firestore();
+*/
 
 // 環境変数からチャネルアクセストークンとチャネルシークレットを取得する
 const config = {
@@ -112,10 +115,9 @@ app.get('/push', (req, res) => {
 
 app.get('/login', (req, res) => res.sendFile(__dirname + '/login.html'));
 
-//C#からの通信を得てLINEのIDを識別、メッセージ送信
+//フォームからの通信を受け取り、uidを入手するリンク
 app.post('/sendid', (req, res) => {
   console.log("send UID");
-  console.log(req + '\n-----------------------------------------------------------------------------------');
   console.log(req.body.uid);
   console.log(req.body.lineId);
   //console.log(req.query.uid);
@@ -148,7 +150,7 @@ app.post('/uidSetting', (req, res) => {
 const serveMessage = async (uid, time) => {
   const message = {
     type: 'text',
-    text: 'PCで' + (time) + '時間作業しました\nそろそろ休憩しませんか？'
+    text: '本日のPC作業時間は' + time + 'になりました\nそろそろ休憩しませんか？'
   };
 
   client.pushMessage(userDatas[uid], message)
@@ -198,12 +200,13 @@ async function handleEvent(event) {
     return Promise.resolve(null);
   }
 
+
   var textStr = "";
   // 返信用メッセージを組み立てる
   if (event.message.text == 'delete' || event.message.text == '連携解除') {
     delete userDatas[userDatas[event.source.userId]];
     delete userDatas[event.source.userId];
-    textStr = "連係解除しました。";
+    textStr = "連携解除しました";
   } else if (event.message.text == 'ids') {
     ids.forEach(function (element) {
       console.log(element);
@@ -211,7 +214,7 @@ async function handleEvent(event) {
     });
   } else if (event.message.text == '認証' || event.message.text == 'login') {
     //認証コマンド
-    textStr = 'https://bot-test1231.herokuapp.com/login?user=' + event.source.userId + '\n上記アドレスで認証を行ってください';
+    textStr = 'https://bot-test1231.herokuapp.com/login?user=' + event.source.userId;// +'\n上記アドレスで認証を行ってください';
   } else if (userDatas[event.source.userId]) {
     if (event.message.text == 'history') {
       //ユーザの１つ前のメッセージを返すhistoryコマンド
